@@ -3,6 +3,8 @@
 // npm install -g local-cors-proxy
 // lcp --proxyUrl http://localhost
 
+
+
 var phonecatApp = angular.module('phonecatApp', []);
 
 phonecatApp.controller('PhoneListController', ['$scope', '$http', function PhoneListController($scope, $http) {
@@ -13,9 +15,9 @@ phonecatApp.controller('PhoneListController', ['$scope', '$http', function Phone
   var currentGameId;
   function refreshGames() {
     var allGames = [];
-    $http.get('http://localhost:8010/proxy/new-games/').then(function(response) {
+    $http.get(SERVER_URL + ':8010/proxy/new-games/').then(function(response) {
         allGames = response.data.newGames;
-        $http.get('http://localhost:8010/proxy/games/').then(function(response) {
+        $http.get(SERVER_URL + ':8010/proxy/games/').then(function(response) {
             pushAll(allGames, response.data.games);
             $scope.games = allGames;
             if (!currentGameId) {
@@ -43,7 +45,7 @@ phonecatApp.controller('PhoneListController', ['$scope', '$http', function Phone
             buildNewGameAsCurrentGame(game);
             return;
         }
-        $http.get('http://localhost:8010/proxy/games/' + gameId).then(function(response) {
+        $http.get(SERVER_URL + ':8010/proxy/games/' + gameId).then(function(response) {
             $scope.currentGame = response.data;
             buildGameMap($scope.currentGame);
         });
@@ -127,7 +129,7 @@ phonecatApp.controller('PhoneListController', ['$scope', '$http', function Phone
 
   $scope.createGame = function() {
     console.log($scope.numberOfPlayers);
-    $http.post('http://localhost:8010/proxy/new-games/?playerCount=' + $scope.numberOfPlayers)
+    $http.post(SERVER_URL + ':8010/proxy/new-games/?playerCount=' + $scope.numberOfPlayers)
          .then(refreshGames)
 
   }
