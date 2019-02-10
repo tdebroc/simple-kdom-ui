@@ -40,7 +40,6 @@ phonecatApp.controller('PhoneListController', ['$scope', '$http', function Phone
         if (!gameId) return;
         currentGameId = gameId;
         var game = getGameFromGameList(gameId);
-        console.log(game)
         if (!isGameStarted(game)) {
             buildNewGameAsCurrentGame(game);
             return;
@@ -80,7 +79,7 @@ phonecatApp.controller('PhoneListController', ['$scope', '$http', function Phone
     if ($scope.currentGame && !$scope.currentGame.gameOver) {
         $scope.selectGame(currentGameId);
     }
-    setTimeout(refreshGame, 300);
+    setTimeout(refreshGame, 500);
   }
   refreshGame();
 
@@ -128,7 +127,6 @@ phonecatApp.controller('PhoneListController', ['$scope', '$http', function Phone
   }
 
   $scope.createGame = function() {
-    console.log($scope.numberOfPlayers);
     $http.post(SERVER_URL + ':8010/proxy/new-games/?playerCount=' + $scope.numberOfPlayers)
          .then(refreshGames)
 
@@ -137,6 +135,8 @@ phonecatApp.controller('PhoneListController', ['$scope', '$http', function Phone
   function getCaseKey(line, col) {
     return line + "#" + col;
   }
+
+  $("#gameList").height($(window).height() - $("#gameList").offset().top - 100)
 
 }
 ]);

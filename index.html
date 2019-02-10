@@ -85,7 +85,7 @@
                     <button ng-click="createGame();"> + Create Game</button>
                 </div>
 
-                <div class="list-group" >
+                <div id="gameList" class="list-group" style="height:400px;overflow:scroll;">
                     <a ng-repeat="game in games" href="#"
                             class="list-group-item"
                             ng-class="currentGame.uuid == game.uuid ? 'active':''"
