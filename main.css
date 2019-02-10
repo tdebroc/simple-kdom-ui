@@ -1,0 +1,131 @@
+#grid td .inner {
+    padding: 2px;
+    height: 28px;
+    width: 28px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.container {
+    min-width: 1400px;
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
+.jumbotron {
+    margin-bottom: 0px;
+}
+
+.domino {
+    padding: 2px;
+    height: 28px;
+    width: 28px;
+    text-align: center;
+    vertical-align: middle;
+    font-weight: bold;
+    color: whitesmoke;
+}
+
+.drafts .domino {
+    float: left;
+    width: 42px;
+    min-width: 42px;
+}
+
+.drafts {
+    display: flex;
+    margin: 4px;
+}
+
+.imagesOn .domino {
+    background-size:     cover;
+    background-repeat:   no-repeat;
+    background-position: center center;
+    height: 42px;
+    width: 42px;
+}
+
+.imagesOn .water {
+    background-image: url("images/water.jpeg") !important;
+}
+
+.imagesOn .field {
+    background-image: url("images/field.jpeg") !important;
+}
+
+.imagesOn .forest {
+    background-image: url("images/forest.jpeg") !important;
+}
+
+.imagesOn .pasture {
+    background-image: url("images/pasture.jpeg") !important;
+}
+
+.imagesOn .mine {
+    background-image: url("images/mine.jpeg") !important;
+}
+
+.imagesOn .clay {
+    background-image: url("images/clay.jpg") !important;
+}
+
+.imagesOn .crown {
+    background-image: url("images/crown-transparentbg.jpg") !important;
+    background-size:     cover;
+    background-repeat:   no-repeat;
+    background-position: center center;
+    height: 20px;
+}
+
+
+.imagesOn .castle {
+    background-image: url("images/clip-art-castle-clipart-1.jpg") !important;
+}
+
+.field  {
+    background-color: rgb(247, 220, 111);
+}
+
+.water {
+    background-color: rgb(84, 153, 199);
+}
+
+.forest {
+    background-color: rgb(39, 174, 96);
+}
+
+.clay {
+    background-color: rgb(240, 178, 122);
+}
+
+.pasture {
+    background-color: rgb(169, 223, 191);
+}
+
+.mine {
+    background-color: rgb(81, 90, 90);
+}
+
+.empty {
+    background-color: rgb(238, 238, 238);
+}
+
+.castle {
+    background-color: black;
+}
+
+.jumbotron {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+#inputNumberOfPlayers {
+  width: 50px;
+}
+
+#createGameContainer {
+  padding: 5px;
+  border: 1px grey solid;
+  margin-bottom: 5px;
+  border-radius: 5px;
+}

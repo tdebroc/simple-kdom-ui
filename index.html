@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="bootstrap.min.css" />
+    <link rel="stylesheet" href="main.css" />
+    <script src="angular.min.js"></script>
+    <script src="main.js"></script>
+    <script src="jquery-3.3.1.min.js"></script>
+</head>
+<body  ng-app="phonecatApp" ng-controller="PhoneListController">
+    <header>
+        <nav class="navbar navbar-default">
+            <div class="container">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="/">KingDomino Live UI By Grooptown</a>
+                </div>
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#"><i class="fa fa-home"></i> Home</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container imagesOn">
+
+        <div class="row row-offcanvas row-offcanvas-right">
+            <div class="col-12 col-md-9">
+<!--                <p class="float-right hidden-md-up">
+                    <button type="button" class="btn btn-primary btn-sm" data-toggle="offcanvas">Toggle nav</button>
+                </p>-->
+                <div class="jumbotron">
+                    <h2>
+                        <span ng-repeat="player in currentGame.kingdoms">
+                            {{player.player.name}}
+                            <span ng-if="!$last"> VS </span>
+                        </span>
+                        <span ng-if="currentGame.kingdoms == 0">
+                            Waiting {{currentGame.numberOfPlayers}} Players to start.
+                        </span>
+                    </h2>
+                </div>
+                <p>Game UUID is {{currentGame.uuid}}.
+                    <span ng-if="!currentGame.turn">
+                        Waiting {{currentGame.numberOfPlayers}} Players in total to start.
+                    </span>
+                </p>
+                <div class="row">
+                    <div class="col-5 col-lg-5" ng-repeat="player in currentGame.kingdoms">
+                        <h3>{{player.player.name}} - {{player.score.total}}</h3>
+                        <table id="grid">
+                            <tr ng-repeat="i in nineElements">
+                                <td ng-repeat="j in nineElements">
+                                    <div ng-class="getGridClass(i, j)" class="domino">
+                                        <!--<div ng-repeat="i in getArrayCrowns(i, j)" class="crown">
+                                        </div>-->
+                                        <span class="crownCount">{{getCrownCount(i, j)}}</span>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-6" ng-if="currentGame.currentDraft.dominoes || currentGame.previousDraft.dominoes">
+                        Current Draft:
+                        <div ng-repeat="draft in currentGame.currentDraft.dominoes" class="drafts">
+                            <div class="domino" ng-class="draft.domino.tile1.terrain">{{draft.domino.tile1.crowns}}</div>
+                            <div class="domino" ng-class="draft.domino.tile2.terrain">{{draft.domino.tile2.crowns}}</div>
+                            {{draft.player.name}}
+                        </div>
+                        <br/>
+                        Previous Draft:
+                        <div ng-repeat="draft in currentGame.previousDraft.dominoes" class="drafts">
+                            <div class="domino" ng-class="draft.domino.tile1.terrain">{{draft.domino.tile1.crowns}}</div>
+                            <div class="domino" ng-class="draft.domino.tile2.terrain">{{draft.domino.tile2.crowns}}</div>
+                            {{draft.player.name}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-6 col-md-3 sidebar-offcanvas" id="sidebar">
+                <div id="createGameContainer">
+                    Number Of players<input type="number" ng-model="numberOfPlayers" id="inputNumberOfPlayers">
+                    <button ng-click="createGame();"> + Create Game</button>
+                </div>
+
+                <div class="list-group" >
+                    <a ng-repeat="game in games" href="#"
+                            class="list-group-item"
+                            ng-class="currentGame.uuid == game.uuid ? 'active':''"
+                            ng-click="selectGame(game.uuid)">
+                        {{game.uuid}}<br/>
+
+                        <span ng-repeat="player in game.players">
+                            {{player.name}}
+                            <span ng-if="!$last"> VS </span>
+                        </span>
+
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <hr>
+        <footer>
+            <p>Grooptown 2019</p>
+        </footer>
+
+    </div>
+
+
+</body>
+</html>
