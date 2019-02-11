@@ -11,7 +11,7 @@ phonecatApp.controller('PhoneListController', ['$scope', '$http', function Phone
   $scope.numberOfPlayers = 2;
 
   $scope.nineElements = [-4,-3,-2,-1,0,1,2,3,4];
-  var gameMap = {};
+  var gameMaps;
   var currentGameId;
   function refreshGames() {
     var allGames = [];
@@ -46,7 +46,7 @@ phonecatApp.controller('PhoneListController', ['$scope', '$http', function Phone
         }
         $http.get(SERVER_URL + ':8010/proxy/games/' + gameId).then(function(response) {
             $scope.currentGame = response.data;
-            buildGameMap($scope.currentGame);
+            buildGameMaps($scope.currentGame);
         });
   }
 
@@ -66,6 +66,7 @@ phonecatApp.controller('PhoneListController', ['$scope', '$http', function Phone
   function buildNewGameAsCurrentGame(game) {
       $scope.currentGame = game;
       $scope.currentGame.kingdoms = [];
+      gameMaps = {};
       for (var i = 0; i < game.joinedPlayers.length; i++) {
         var player = {
             player : game.joinedPlayers[i]
@@ -90,19 +91,20 @@ phonecatApp.controller('PhoneListController', ['$scope', '$http', function Phone
   refreshGameTimer();
 
 
-  $scope.getGameMap = function(i, j) {
-    return gameMap[getCaseKey(i, j)];
+  $scope.getGameMap = function(playerIndex, i, j) {
+    if (!gameMaps || !gameMaps[playerIndex]) return undefined;
+    return gameMaps[playerIndex][getCaseKey(i, j)];
   }
 
 
 
-  $scope.getGridClass = function(i, j) {
+  $scope.getGridClass = function(playerIndex, i, j) {
     if (i == 0 && j == 0) return "castle";
-    var placedTile = gameMap[getCaseKey(i, j)];
+    var placedTile = $scope.getGameMap(playerIndex, i, j);
     return placedTile ? placedTile.terrain : "empty";
   }
-  $scope.getCrownCount = function(i, j) {
-      var placedTile = gameMap[getCaseKey(i, j)];
+  $scope.getCrownCount = function(playerIndex, i, j) {
+      var placedTile = $scope.getGameMap(playerIndex, i, j);
       return placedTile ? (placedTile.crowns > 0 ? placedTile.crowns : " ") : " ";
     }
 
@@ -115,14 +117,16 @@ phonecatApp.controller('PhoneListController', ['$scope', '$http', function Phone
       return arr;
     }
 
-  function buildGameMap(game) {
-    gameMap = {};
+  function buildGameMaps(game) {
+    gameMaps = {};
     for (var i = 0; i < game.kingdoms.length; i++) {
         var kingdom = game.kingdoms[i];
-        for (var i = 0; i < kingdom.placedTiles.length; i++) {
-            var placedTile = kingdom.placedTiles[i];
+        var gameMap = {};
+        for (var j = 0; j < kingdom.placedTiles.length; j++) {
+            var placedTile = kingdom.placedTiles[j];
             gameMap[getCaseKey(placedTile.position.row, placedTile.position.col)] = placedTile.tile;
         }
+        gameMaps[i] = gameMap;
     }
   }
 

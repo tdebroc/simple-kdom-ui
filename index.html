@@ -47,15 +47,16 @@
                     </span>
                 </p>
                 <div class="row">
-                    <div class="col-5 col-lg-5" ng-repeat="player in currentGame.kingdoms">
+                    <div class="col-5 col-lg-5" ng-repeat="player in currentGame.kingdoms" ng-init="playerIndex=$index">
                         <h3>{{player.player.name}} - {{player.score.total}}</h3>
                         <table id="grid">
                             <tr ng-repeat="i in nineElements">
                                 <td ng-repeat="j in nineElements">
-                                    <div ng-class="getGridClass(i, j)" class="domino">
+                                    <div ng-class="getGridClass(playerIndex, i, j)" class="domino">
                                         <!--<div ng-repeat="i in getArrayCrowns(i, j)" class="crown">
                                         </div>-->
-                                        <span class="crownCount">{{getCrownCount(i, j)}}</span>
+                                        {{playerIndex}}
+                                        <span class="crownCount">{{getCrownCount(playerIndex, i, j)}}</span>
                                     </div>
                                 </td>
                             </tr>
